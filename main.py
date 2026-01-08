@@ -1,10 +1,10 @@
 from fastmcp import FastMCP
+import requests
 
 mcp = FastMCP("My MCP Server")
 
 @mcp.tool
-def greet(name: str) -> str:
-    return f"Hello, {name}!"
-
-"""if __name__ == "__main__":
-    mcp.run(transport="http", port=8000)"""
+def weather(city) -> str:
+    url = f"https://wttr.in/{city}?format=j1"
+    data = requests.get(url).json()
+    return str(data["current_condition"][0]["temp_C"])
